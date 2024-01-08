@@ -1,18 +1,56 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm ,useFieldArray} from 'react-hook-form'
 import { DevTool } from '@hookform/devtools';
 const UseFormHook = () => {
 
-    const form= useForm();
-    const {register ,control ,handleSubmit ,formState}=form;
+    const form= useForm({
+        defaultValues:{
+            username:"Rajan",
+            email:"raman@gmail.com",
+            channel:"",
+            social:{
+                twitter:"",
+                facebook:"",
+            },
+            phoneNumber:["",""],
+            phNumber:[{number:""}], 
+            age:0,
+            Dob:new Date(),
+        }
+    });
+
+    
+    const {register ,control ,handleSubmit ,formState ,watch ,getValues ,setValue}=form;
     const {errors}=formState
+
+    const {fields,append ,remove}=useFieldArray({
+        name:"phNumber",
+        control
+        
+   })
+
+   const handleGetValue=()=>{
+    console.log("Get value " , getValues())
+   }
+
+   const handleSetValue=()=>{
+       setValue("username","Mayank kumar",{
+        shouldValidate:true,
+        shouldDirty:true,
+        shouldTouch:true,
+       })
+   }
+
+   const watchvalue=watch();
+   
 
     const onSubmit=(data)=>{
         console.log("Form is Submitted" ,data);
     }
   return (
-    <>
+    <>   
         <div className="form-content">
+            {/* <h1>Watch value :{JSON.stringify(watchvalue)}</h1> */}
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <label htmlFor='username'>Username</label>
                 <input
@@ -44,8 +82,70 @@ const UseFormHook = () => {
                 <input type='text' id='channel' {...register("channel",{required:"Channel name is required"})}/>
                 <p>{errors.channel?.message}</p>
 
+                <label htmlFor='twitter'>Twitter</label>
+                <input
+                 type='text' 
+                 id='twitter'   
+                 {...register("social.twitter")}/>
+
+                 <label htmlFor='facebook'>Facebook</label>
+                <input
+                 type='text' 
+                 id='facebook'   
+                 {...register("social.facebook")}/>
+
+                <label htmlFor='primary'>Primary no.</label>
+                <input
+                 type='number' 
+                 id='primary'   
+                 {...register("phoneNumber.0")}/>
+
+                <label htmlFor='secondary'>Secondary no.</label>
+                <input
+                 type='number' 
+                 id='secondary'   
+                 {...register("phoneNumber.1")}/>
+
+                 <div>
+                    <label>List of phone Number</label>
+                 </div>
+                 {
+                    fields.map((field,index)=>{
+                        return(
+                            <div key={field.id}>
+                                <input
+                                type="text"
+                                {...register(`phNumber${index}.number`)}
+                                />
+
+                                {
+                                    index>0 &&
+                                    (<button  type="button" 
+                                    onClick={()=>remove(index)}>remove</button>)
+                                 }
+                              </div>
+
+                           
+                        )
+                    })
+                 }
+                 <button type="button" onClick={()=>append({number:""})}>Add</button>
+
+                 <label htmlFor='age'>Age</label>
+                <input type='number' id='age' {...register("age",
+                 {valueAsNumber:true,required:"Age is required"})}/>
+                <p>{errors.age?.message}</p>
+
+                <label htmlFor='dob'>D.O.B</label>
+                <input type='date' id='dob' {...register("dob",
+                 { valueAsDate:true,required:"dob is required"})}/>
+              
+
+
 
                 <button>Submit</button>
+                 <button onClick={handleGetValue}>Get values</button>
+                 <button onClick={handleSetValue}>Set values</button>
                
             </form>
             <DevTool control={control}/>
