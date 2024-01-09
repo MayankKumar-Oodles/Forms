@@ -16,12 +16,16 @@ const UseFormHook = () => {
             phNumber:[{number:""}], 
             age:0,
             Dob:new Date(),
+            mode :"onSubmit",
+            
         }
     });
 
     
-    const {register ,control ,handleSubmit ,formState ,watch ,getValues ,setValue}=form;
-    const {errors}=formState
+    const {register ,control ,handleSubmit ,formState ,watch ,getValues ,setValue ,reset}=form;
+    const {errors,touchedFields,dirtyFields ,isDirty , isValid}=formState
+
+    console.log({touchedFields,dirtyFields ,isDirty ,isValid});
 
     const {fields,append ,remove}=useFieldArray({
         name:"phNumber",
@@ -47,11 +51,15 @@ const UseFormHook = () => {
     const onSubmit=(data)=>{
         console.log("Form is Submitted" ,data);
     }
+
+    const onError =(error)=>{
+        console.log("On Error ", error)
+    }
   return (
     <>   
         <div className="form-content">
             {/* <h1>Watch value :{JSON.stringify(watchvalue)}</h1> */}
-            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form onSubmit={handleSubmit(onSubmit,onError)} noValidate>
                 <label htmlFor='username'>Username</label>
                 <input
                  type='text' 
@@ -86,7 +94,7 @@ const UseFormHook = () => {
                 <input
                  type='text' 
                  id='twitter'   
-                 {...register("social.twitter")}/>
+                 {...register("social.twitter" ,{ disabled:true})}/>
 
                  <label htmlFor='facebook'>Facebook</label>
                 <input
@@ -104,7 +112,7 @@ const UseFormHook = () => {
                 <input
                  type='number' 
                  id='secondary'   
-                 {...register("phoneNumber.1")}/>
+                 {...register("phoneNumber.1 ")}/>
 
                  <div>
                     <label>List of phone Number</label>
@@ -143,9 +151,10 @@ const UseFormHook = () => {
 
 
 
-                <button>Submit</button>
+                <button disabled={!isDirty || !isValid}>Submit</button>
                  <button onClick={handleGetValue}>Get values</button>
                  <button onClick={handleSetValue}>Set values</button>
+                 <button onClick={()=>{reset()}}>reset</button>
                
             </form>
             <DevTool control={control}/>
