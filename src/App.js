@@ -1,11 +1,12 @@
  import React from 'react'
-import UseFormHook from './components/UseFormHook'
+ 
 import './App.css';
+import Formtask from './components/Formtask';
 
  const App = () => {
    return (
      <div>
-        <UseFormHook/>
+        <Formtask/>
      </div>
    )
  }
