@@ -1,15 +1,28 @@
-.box{
-   /* background-image: linear-gradient(to bottom right, rgb(251, 255, 0), rgb(0, 238, 255)); */
-   border-radius: 1rem;
-   margin-top: 3rem !important;
-   padding: 2rem !important;
-   margin-right: 1rem !important;
-  /*  box-shadow: 4px 4px 8px rgb(36, 36, 36); */
-   background-color: rgba(0, 59, 59, 0.247);
-}
-input{
-   border-radius: 13px !important;
-   padding: 5px;
-   border: none;
-   display: block;
-}
+ body{
+
+    margin:0;
+    padding:0;
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+
+ }
+
+ .Navbar{
+
+    background-image: linear-gradient(to left ,lightpink, rgb(141, 141, 160));
+    height:5vw;
+    font-size:2vw;
+    display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     gap:1vw;
+     padding-left: 1vw;
+    
+
+ }
+
+ /* nav a.active{
+     text-decoration: none;
+     font-weight:bold;
+     
+ } */
