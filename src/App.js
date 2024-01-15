@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router";
 import Home from "./components/Home";
-import About from "./components/About";
 import Navbar from "./components/Navbar";
 import Orderpage from "./components/Orderpage";
 import Nomatch from "./components/Nomatch";
@@ -12,13 +11,14 @@ import NewProduct from "./components/NewProduct";
 import Users from "./components/Users";
 import UserDetails from "./components/UserDetails";
 import Admin from "./components/Admin";
+const LazyAbout = React.lazy(()=> import ('./components/About'))
 const App = () => {
   return (
     <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
+        <Route path="about" element={<React.Suspense fallback="loading..."><LazyAbout  /></React.Suspense>} />
         <Route path="order" element={<Orderpage />} />
         <Route path="*" element={<Nomatch />} />
         <Route path="users" element={<Users />} />
