@@ -13,12 +13,14 @@ const Navbar = () => {
       <NavLink style={navStyleLink} to="/">
         Home
       </NavLink>
-      <NavLink style={navStyleLink} to="about">
+      <NavLink style={navStyleLink} to="/about">
         About
       </NavLink>
-      <NavLink style={navStyleLink} to="products">
+      <NavLink style={navStyleLink} to="/products">
         Products
       </NavLink>
+      <NavLink style={navStyleLink} to="users">Users</NavLink>
+      <NavLink style={navStyleLink} to="/profile">Profile</NavLink>
     </nav>
   );
 };
