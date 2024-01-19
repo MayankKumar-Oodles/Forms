@@ -2,21 +2,26 @@ import React, { useState } from 'react';
 import {useForm } from 'react-hook-form';
 import EmployeeServices from '../services/EmployeeServices';
 
-const InputForm = () => {
 
-    const form = useForm()
-    const {register , formState ,reset, handleSubmit} =form
-    const {errors} = formState
-   
+const UpdateForm = ({data}) => {
+    const [formData , setFormData]=useState(data)
+     
+    const form = useForm({
+      defaultValues:formData,
+      mode:"onChange",
+    })
+    const {register ,reset, handleSubmit  } =form
 
-    const onSubmit =(data)=>{
-        console.log("form is submitted" ,data)
-
-        EmployeeServices.addData(data)
-        reset()
+    const onSubmit =(u)=>{
+         
+        setFormData(u)
+        // console.log("Data after update" ,u)
+        EmployeeServices.updateData(u.id ,u)
+        reset(formData)
+       
     }
-
-
+  
+    
   return (
     <form  className="max-w-md mx-auto mt-8" noValidate onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-4">
@@ -26,11 +31,9 @@ const InputForm = () => {
         <input
               type="text"
               id="name"
-              
-             
               placeholder='Your Name'
               className="border border-gray-300 p-2 rounded w-full"
-               {...register("name")}
+               {...register("name" , {onChange:(e)=>{e.target.value}})}
             />            
       </div>
             
@@ -42,8 +45,7 @@ const InputForm = () => {
         <input
           type="email"
           id="email"
-          
-      
+         
           placeholder="Your Email"
           className="border border-gray-300 p-2 rounded w-full"
           {...register("email")}
@@ -57,8 +59,7 @@ const InputForm = () => {
         <input
           type="tel"
           id="phone"
-           
-           
+      
           placeholder="Your Phone"
           className="border border-gray-300 p-2 rounded w-full"
           {...register("phone" )}
@@ -71,11 +72,10 @@ const InputForm = () => {
         </label>
         <select
           id="gender"
-           
-       
+      
           placeholder="Your Gender"
           className="border border-gray-300 p-2 rounded w-full"
-          {...register("gender")}
+          {...register("gender"  )}
         >
           <option value="">Select Gender</option>
           <option value="male">Male</option>
@@ -85,13 +85,13 @@ const InputForm = () => {
       </div>
 
       <button
-        type="submit"
+        type="submit" 
         className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
       >
-        Submit
+        Update
       </button>
     </form>
   );
 };
 
-export default InputForm;
+export default UpdateForm;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import EmployeeServices from "../services/EmployeeServices";
 import UpdateUser from "../components/UpdateUser";
-
+import DeleteUser from "../components/DeleteUser";
 
 const Employee = () => {
   const [Employee, setNewEmployee] = useState([]);
@@ -15,11 +15,11 @@ const Employee = () => {
     setNewEmployee(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-//   const updateData=(e)=>{
-//           console.log("Data to be updated" ,e);
-//           <AddUserModal/>
-          
-//   }
+  //   const updateData=(e)=>{
+  //           console.log("Data to be updated" ,e);
+  //           <AddUserModal/>
+
+  //   }
   return (
     <div>
       <div>
@@ -42,11 +42,11 @@ const Employee = () => {
                   <td> {e.email}</td>
                   <td> {e.gender}</td>
                   <td> {e.phone}</td>
-                   <td><UpdateUser data={e} /></td> 
-                   <td>
-                    <button className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
-                      Delete
-                    </button>
+                  <td>
+                    <UpdateUser data={e} />
+                  </td>
+                  <td>
+                     <DeleteUser id={e.id}/>
                   </td>
                 </tr>
               );

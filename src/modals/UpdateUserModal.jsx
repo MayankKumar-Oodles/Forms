@@ -1,12 +1,13 @@
 import React from 'react'
-import InputForm from '../components/InputForm'
+import UpdateForm from '../components/UpdateForm'
  
 const UpdateUserModal = ({closeModal ,data}) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
       <div className="bg-white p-8 rounded shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Edit Details</h2>
-         <InputForm data={data}/>
+         <UpdateForm data={data}/>
+         
         
         <button
           onClick={closeModal}
