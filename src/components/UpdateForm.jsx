@@ -10,14 +10,25 @@ const UpdateForm = ({data}) => {
       defaultValues:formData,
       mode:"onChange",
     })
-    const {register ,reset, handleSubmit  } =form
 
+    const changeDefaultValues = () => {
+      const newDefaultValues = {
+        name: '',
+        email: '',
+        phone: '',
+        gender: '',
+      }
+      form.reset(newDefaultValues)
+    }
+    const {register , handleSubmit  } =form
+     
+    
     const onSubmit =(u)=>{
          
         setFormData(u)
-        // console.log("Data after update" ,u)
+        console.log("Data after update" ,u)
         EmployeeServices.updateData(u.id ,u)
-        reset(formData)
+        changeDefaultValues()
        
     }
   
@@ -86,6 +97,7 @@ const UpdateForm = ({data}) => {
 
       <button
         type="submit" 
+          
         className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
       >
         Update

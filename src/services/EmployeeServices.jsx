@@ -18,7 +18,7 @@ class  EmployeeServices{
     updateData= async (id,updata)=>{
       
         const userdoc=doc(db ,"e-crud",id)
-        console.log("Employee service update data function",updata)
+        // console.log("Employee service update data function",updata)
         return  await updateDoc(userdoc,updata);
     }
 
