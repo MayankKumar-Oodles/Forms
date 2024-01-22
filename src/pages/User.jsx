@@ -1,7 +1,7 @@
 import React from 'react'
 import Title from '../components/Title'
 import Employee from './Employee'
-
+ 
 const User = () => {
   return (
     <div>
