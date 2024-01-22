@@ -20,7 +20,8 @@ const UpdateForm = ({data}) => {
       }
       form.reset(newDefaultValues)
     }
-    const {register , handleSubmit  } =form
+    const {register , handleSubmit ,formState} =form
+    const {errors} = formState
      
     
     const onSubmit =(u)=>{
@@ -44,8 +45,28 @@ const UpdateForm = ({data}) => {
               id="name"
               placeholder='Your Name'
               className="border border-gray-300 p-2 rounded w-full"
-               {...register("name" , {onChange:(e)=>{e.target.value}})}
-            />            
+               {...register("name" , { required:true,
+                minLength: {
+                value: 3,
+                message: "At least 3 characters ",
+              },
+
+              maxLength: {
+                value: 30,
+                message: "cannot exceed 30 characters",
+              },
+              
+              validate: (name) => {
+                var regex =
+                  /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
+                if (regex.test(name)) {
+                  return true;
+                } else {
+                  return "Invalid name !";
+                }
+              },})}
+            />    
+            <p className='text-yellow-900'>{errors.name?.message} </p>        
       </div>
             
 
@@ -59,8 +80,19 @@ const UpdateForm = ({data}) => {
          
           placeholder="Your Email"
           className="border border-gray-300 p-2 rounded w-full"
-          {...register("email")}
+          {...register("email" ,{  required:true,
+            
+            validate: (email) => {
+            var regex =
+              /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            if (regex.test(email)) {
+              return true;
+            } else {
+              return "Invalid Email !";
+            }
+          },})}
         />
+        <p className='text-yellow-900'>{errors.email?.message} </p>
       </div>
 
       <div className="mb-4">
@@ -73,8 +105,14 @@ const UpdateForm = ({data}) => {
       
           placeholder="Your Phone"
           className="border border-gray-300 p-2 rounded w-full"
-          {...register("phone" )}
+          {...register("phone" ,{ required:true,
+            validate: (num) => {
+              const pattern = new RegExp(/^\d{1,10}$/);
+              if (!pattern.test(num)) return "Invalid Entry !";
+            },
+          })}
         />
+        <p className='text-yellow-900'>{errors.phone?.message} </p>
       </div>
 
       <div className="mb-4">
@@ -86,13 +124,16 @@ const UpdateForm = ({data}) => {
       
           placeholder="Your Gender"
           className="border border-gray-300 p-2 rounded w-full"
-          {...register("gender"  )}
+          {...register("gender" ,{
+            required:'Gender is required'
+          } )}
         >
           <option value="">Select Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="other">Other</option>
         </select>
+        <p className='text-yellow-900'>{errors.gender?.message} </p>
       </div>
 
       <button

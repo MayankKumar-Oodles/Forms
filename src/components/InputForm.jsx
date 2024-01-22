@@ -4,7 +4,15 @@ import EmployeeServices from '../services/EmployeeServices';
 
 const InputForm = () => {
 
-    const form = useForm()
+    const form = useForm({
+      defaultValues:{
+        name:'',
+        email:'',
+        phone:'',
+        gender:'',
+      },
+      mode:'onChange',
+    })
     const {register , formState ,reset, handleSubmit} =form
     const {errors} = formState
    
@@ -18,7 +26,7 @@ const InputForm = () => {
 
 
   return (
-    <form  className="max-w-md mx-auto mt-8" noValidate onSubmit={handleSubmit(onSubmit)}>
+    <form  className="max-w-md mx-auto mt-8" noValidate  onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-4">
         <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
           Name
@@ -26,12 +34,32 @@ const InputForm = () => {
         <input
               type="text"
               id="name"
-              
-             
               placeholder='Your Name'
               className="border border-gray-300 p-2 rounded w-full"
-               {...register("name")}
-            />            
+               {...register("name" , {
+                required: true,
+                minLength: {
+                  value: 3,
+                  message: "At least 3 characters ",
+                },
+
+                maxLength: {
+                  value: 30,
+                  message: "cannot exceed 30 characters",
+                },
+                
+                validate: (name) => {
+                  var regex =
+                    /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
+                  if (regex.test(name)) {
+                    return true;
+                  } else {
+                    return "Invalid name !";
+                  }
+                },
+              })}
+            />    
+            <p className='text-yellow-900'>{errors.name?.message} </p>        
       </div>
             
 
@@ -46,8 +74,20 @@ const InputForm = () => {
       
           placeholder="Your Email"
           className="border border-gray-300 p-2 rounded w-full"
-          {...register("email")}
+          {...register("email", {
+            required: true,
+            validate: (email) => {
+              var regex =
+                /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+              if (regex.test(email)) {
+                return true;
+              } else {
+                return "Invalid Email !";
+              }
+            },
+          } )}
         />
+        <p className='text-yellow-900'>{errors.email?.message} </p>  
       </div>
 
       <div className="mb-4">
@@ -57,13 +97,18 @@ const InputForm = () => {
         <input
           type="tel"
           id="phone"
-           
-           
           placeholder="Your Phone"
           className="border border-gray-300 p-2 rounded w-full"
-          {...register("phone" )}
+          {...register("phone" , {
+            required: true,
+            validate: (num) => {
+              const pattern = new RegExp(/^\d{1,10}$/);
+              if (!pattern.test(num)) return "Invalid Entry !";
+            },
+          })}
         />
       </div>
+      <p className='text-yellow-900'>{errors.phone?.message} </p>  
 
       <div className="mb-4">
         <label htmlFor="gender" className="block text-gray-700 font-bold mb-2">
@@ -71,11 +116,12 @@ const InputForm = () => {
         </label>
         <select
           id="gender"
-           
-       
           placeholder="Your Gender"
           className="border border-gray-300 p-2 rounded w-full"
-          {...register("gender")}
+          {...register("gender" ,{
+            required: "Gender is required !",
+             
+          })}
         >
           <option value="">Select Gender</option>
           <option value="male">Male</option>
@@ -83,6 +129,7 @@ const InputForm = () => {
           <option value="other">Other</option>
         </select>
       </div>
+      <p className='text-yellow-900'>{errors.gender?.message} </p> 
 
       <button
         type="submit"

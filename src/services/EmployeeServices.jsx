@@ -26,7 +26,6 @@ class  EmployeeServices{
        const userDoc = doc(db, "e-crud", id);
        await deleteDoc(userDoc);
      };
-    
  
  }
 
