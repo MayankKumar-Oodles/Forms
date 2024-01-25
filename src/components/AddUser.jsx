@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AddUserModal from '../modals/AddUserModal';
-const AddUser = ({}) => {
+import { AuthContext } from '../context/ AuthStore';
+
+const AddUser = () => {
+  const {auth}=useContext(AuthContext)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    if(auth){
+      setIsModalOpen(true)
+    }
+    else{
+      alert("Please log in to add a user")
+    }
+     
   };
 
   const closeModal = () => {

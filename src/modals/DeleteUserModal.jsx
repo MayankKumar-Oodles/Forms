@@ -2,16 +2,17 @@ import React from 'react'
 import EmployeeServices from '../services/EmployeeServices'
  
  
-const DeleteUserModal = ({closeModal  ,id}) => {
+const DeleteUserModal = ({closeModal  ,id,refDel}) => {
 
   const deleteDataModal=()=>{
        EmployeeServices.deleteData(id)
        closeModal()
+       refDel()
 
   }
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div className="bg-white p-8 rounded shadow-lg">
+      <div className="bg-white p-8 rounded shadow-lg ">
         <h2 className="text-2xl font-bold mb-4">Do you want to delete data ? </h2>
         
         <button

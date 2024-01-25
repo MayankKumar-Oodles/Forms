@@ -5,16 +5,8 @@
 body{
     font-family: arial, sans-serif;
 }
-/* .active{
-     
-    border-color: black;
-    color:black;
-} */
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
+ 
+ 
   
   td, th {
     border: 1px solid #dddddd;

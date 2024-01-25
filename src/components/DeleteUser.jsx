@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
 import DeleteUserModal from '../modals/DeleteUserModal';
 import EmployeeServices from '../services/EmployeeServices';
+import { AuthContext } from '../context/ AuthStore';
  
 
-const DeleteUser = ({id}) => {
+const DeleteUser = ({id ,  refDel}) => {
+    const{key}=useContext(AuthContext)
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+     
     const openModal = () => {
-      setIsModalOpen(true);
-    };
-
+      
+      if(key){
+       setIsModalOpen(true)
+      }
+      else{
+       alert("Please Login to delete employee details")
+      }
+      
+   };
    
 
     const closeModal = () => {
@@ -26,7 +34,7 @@ const DeleteUser = ({id}) => {
           Delete
         </button>
   
-        {isModalOpen && <DeleteUserModal closeModal={closeModal} id={id}/>}
+        {isModalOpen && <DeleteUserModal refDel={refDel} closeModal={closeModal} id={id}/>}
       </>
     );
 }

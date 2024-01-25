@@ -1,12 +1,12 @@
 import React from 'react'
-import AddUser from './AddUser'
-import UserManagement from './UserManagement'
+import EmpManagment from './EmpManagment'
+import AddEmployee from './AddEmployee'
 
-const Title = () => {
+const Title = ({refDel}) => {
   return (
     <div className= ' border-2 p-3 bg-gray-100 flex justify-between'>
-          <UserManagement/>
-          <AddUser/>
+          <EmpManagment/>
+          <AddEmployee refDel={refDel}/>
     </div>
   )
 }

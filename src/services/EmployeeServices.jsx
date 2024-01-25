@@ -13,7 +13,6 @@ class  EmployeeServices{
     addData=(data)=>{
          console.log('adddata ',data);
         return addDoc(employeeCollectionRef , data)
-      
     }
     updateData= async (id,updata)=>{
       
